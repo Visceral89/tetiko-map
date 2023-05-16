@@ -15,7 +15,7 @@ export default function Scene() {
 
 		// Camera Variables
 
-		const fov = 90;
+		const fov = 50;
 		const nearclip = 0.1;
 		const farclip = 1000;
 
@@ -25,7 +25,13 @@ export default function Scene() {
 			nearclip,
 			farclip
 		);
-		camera.position.z = 5;
+		camera.position.set(-16, -18, 14);
+		camera.rotation.order = "ZYX";
+		camera.rotation.set(
+			THREE.MathUtils.degToRad(60),
+			THREE.MathUtils.degToRad(0),
+			THREE.MathUtils.degToRad(-42)
+		);
 
 		// Rendering Variables
 		const b_antialias = true;
@@ -37,20 +43,22 @@ export default function Scene() {
 		renderer.setClearColor(0xffffff);
 
 		// Resize Window
-		window.addEventListener("resize", function () {
+		const onResize = function () {
 			const width = window.innerWidth;
 			const height = window.innerHeight;
 			renderer.setSize(width, height);
 			camera.aspect = width / height;
 			camera.updateProjectionMatrix();
-		});
+		};
+
+		window.addEventListener("resize", onResize);
 
 		// Lighting
 
-		const ambientLight = new THREE.AmbientLight(0xffffff, 0, 6);
+		const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
 		scene.add(ambientLight);
 
-		const dirLight = new THREE.DirectionalLight(0xffffff, 0, 5);
+		const dirLight = new THREE.DirectionalLight(0xffffff, 0.5);
 		dirLight.position.set(0, 20, 10);
 		scene.add(dirLight);
 
@@ -85,23 +93,25 @@ export default function Scene() {
 				console.error("An error happened while loading models", error);
 			});
 
+		const controls = new OrbitControls(camera, renderer.domElement);
+		controls.rotateSpeed = 0.7;
+		controls.zoomSpeed = 0.3;
+		controls.minDistance = 2;
+		controls.maxDistance = 10;
+
 		function animate() {
 			requestAnimationFrame(animate);
 			renderer.render(scene, camera);
 
 			// Update controls!
-			const controls = new OrbitControls(camera, renderer.domElement);
-			controls.rotateSpeed = 0.3;
-			controls.zoomSpeed = 0.1;
-			controls.minDistance = 2;
-			controls.maxDistance = 10;
+
 			controls.update();
 		}
 
 		animate();
 
 		return () => {
-			window.removeEventListener("resize", function () {});
+			window.removeEventListener("resize", onResize);
 			container.current.removeChild(renderer.domElement);
 		};
 	}, []);
