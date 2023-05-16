@@ -7,11 +7,11 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 export default function Scene() {
 	const container = useRef();
 
-	const width = window.innerWidth;
-	const height = window.innerHeight;
-
 	useEffect(() => {
 		const scene = new THREE.Scene();
+
+		const width = window.innerWidth;
+		const height = window.innerHeight;
 
 		// Camera Variables
 
@@ -34,6 +34,8 @@ export default function Scene() {
 		renderer.setSize(width, height);
 		container.current.appendChild(renderer.domElement);
 
+		renderer.setClearColor(0xffffff);
+
 		// Resize Window
 		window.addEventListener("resize", function () {
 			const width = window.innerWidth;
@@ -42,6 +44,15 @@ export default function Scene() {
 			camera.aspect = width / height;
 			camera.updateProjectionMatrix();
 		});
+
+		// Lighting
+
+		const ambientLight = new THREE.AmbientLight(0xffffff, 0, 6);
+		scene.add(ambientLight);
+
+		const dirLight = new THREE.DirectionalLight(0xffffff, 0, 5);
+		dirLight.position.set(0, 20, 10);
+		scene.add(dirLight);
 
 		// GLTF Loader
 		const loader = new GLTFLoader();
@@ -65,7 +76,7 @@ export default function Scene() {
 
 		// Add all models to be loaded here.
 
-		const modelUrls = ["@/models/room.glb"];
+		const modelUrls = ["/models/room.glb"];
 		Promise.all(modelUrls.map(loadModel))
 			.then(() => {
 				console.log("All models loaded");
@@ -80,6 +91,10 @@ export default function Scene() {
 
 			// Update controls!
 			const controls = new OrbitControls(camera, renderer.domElement);
+			controls.rotateSpeed = 0.3;
+			controls.zoomSpeed = 0.1;
+			controls.minDistance = 2;
+			controls.maxDistance = 10;
 			controls.update();
 		}
 
