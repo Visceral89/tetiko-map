@@ -12,6 +12,7 @@ export default function Scene() {
 
 		const width = window.innerWidth;
 		const height = window.innerHeight;
+		const shadowmapres = 512;
 
 		// Camera Variables
 
@@ -38,6 +39,8 @@ export default function Scene() {
 
 		const renderer = new THREE.WebGLRenderer({ antialias: b_antialias });
 		renderer.setSize(width, height);
+		renderer.shadowMap.enabled = true;
+		renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 		container.current.appendChild(renderer.domElement);
 
 		renderer.setClearColor(0xffffff);
@@ -60,6 +63,12 @@ export default function Scene() {
 
 		const dirLight = new THREE.DirectionalLight(0xffffff, 0.5);
 		dirLight.position.set(0, 20, 10);
+		dirLight.castShadow = true;
+		dirLight.shadow.mapSize.width = shadowmapres;
+		dirLight.shadow.mapSize.height = shadowmapres;
+
+		dirLight.shadow.camera.near = 0.5;
+		dirLight.shadow.camera.far = 500;
 		scene.add(dirLight);
 
 		// GLTF Loader
@@ -70,6 +79,12 @@ export default function Scene() {
 				loader.load(
 					url,
 					(gltf) => {
+						gltf.scene.traverse((node) => {
+							if (node instanceof THREE.Mesh) {
+								node.castShadow = true;
+								node.receiveShadow = true;
+							}
+						});
 						scene.add(gltf.scene);
 						resolve(gltf);
 					},
