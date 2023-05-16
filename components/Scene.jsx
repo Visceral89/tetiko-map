@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
@@ -62,11 +63,9 @@ export default function Scene() {
 			});
 		}
 
-		const modelUrls = [
-			"@/models/model1.gltf",
-			"@/models/model2.gltf",
-			"@/models/model3.gltf",
-		];
+		// Add all models to be loaded here.
+
+		const modelUrls = ["@/models/room.glb"];
 		Promise.all(modelUrls.map(loadModel))
 			.then(() => {
 				console.log("All models loaded");
