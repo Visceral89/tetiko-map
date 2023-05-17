@@ -13,11 +13,12 @@
 	z-index: 1000;
 	width: 200px;
 	align-items: center;
-	justify-content: center;
+	justify-content: flex-start;
 	align-items: center;
+	gap: 16px;
 	box-shadow: 0px 5px 30px 1px rgba(30, 30, 30, 0.1);
 }
 
-.list {
-	list-style: none;
+.navbarItem {
+	margin-top: 100px;
 }

@@ -5,7 +5,7 @@ import SignOutBtn from "./SignOutBtn";
 const Navbar = () => {
 	return (
 		<nav className={styles.navbar}>
-			<div>Tetiko Platskarta</div>
+			<div className={styles.navbarItem}>Tetiko Platskarta</div>
 			<div>
 				<SignInBtn />
 			</div>
