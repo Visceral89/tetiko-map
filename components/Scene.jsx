@@ -16,7 +16,7 @@ export default function Scene() {
 
 		// Camera Variables
 
-		const fov = 50;
+		const fov = 60;
 		const nearclip = 0.1;
 		const farclip = 1000;
 
@@ -26,13 +26,16 @@ export default function Scene() {
 			nearclip,
 			farclip
 		);
-		camera.position.set(-16, -18, 14);
+		camera.position.set(-15, 15, 13);
 		camera.rotation.order = "ZYX";
+		camera.rotation.set(65, 0, -45);
+		/*
 		camera.rotation.set(
-			THREE.MathUtils.degToRad(60),
+			THREE.MathUtils.degToRad(65),
 			THREE.MathUtils.degToRad(0),
 			THREE.MathUtils.degToRad(-42)
-		);
+			
+		); */
 
 		// Rendering Variables
 		const b_antialias = true;
@@ -56,7 +59,7 @@ export default function Scene() {
 
 		window.addEventListener("resize", onResize);
 
-		// Lighting
+		/*// Lighting
 
 		const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
 		scene.add(ambientLight);
@@ -80,42 +83,32 @@ export default function Scene() {
 		dirLight.shadow.camera.far = 5000;
 		scene.add(dirLight);
 
+		*/
+
 		// GLTF Loader
 		const loader = new GLTFLoader();
 
-		function loadModel(url) {
-			return new Promise((resolve, reject) => {
-				loader.load(
-					url,
-					(gltf) => {
-						gltf.scene.traverse((node) => {
-							if (node instanceof THREE.Mesh) {
-								node.castShadow = true;
-								node.receiveShadow = true;
-							}
-						});
-						scene.add(gltf.scene);
-						resolve(gltf);
-					},
-					undefined,
-					(error) => {
-						console.error("Failed to load model", error);
-						reject(error);
+		loader.load(
+			"/models/room.glb",
+			(gltf) => {
+				const textureLoader = new THREE.TextureLoader();
+				const lightMap = textureLoader.load("/lightmaps/room_lightmap.png");
+				lightMap.flipY = false;
+
+				gltf.scene.traverse((node) => {
+					if (node.isMesh) {
+						node.material.lightMap = lightMap;
+						node.material.needsUpdate = true;
 					}
-				);
-			});
-		}
+				});
+
+				scene.add(gltf.scene);
+			},
+			undefined,
+			(error) => console.error(error)
+		);
 
 		// Add all models to be loaded here.
-
-		const modelUrls = ["/models/room.glb"];
-		Promise.all(modelUrls.map(loadModel))
-			.then(() => {
-				console.log("All models loaded");
-			})
-			.catch((error) => {
-				console.error("An error happened while loading models", error);
-			});
 
 		const controls = new OrbitControls(camera, renderer.domElement);
 		controls.rotateSpeed = 0.7;
