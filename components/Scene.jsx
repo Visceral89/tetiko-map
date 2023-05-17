@@ -12,7 +12,6 @@ export default function Scene() {
 
 		const width = window.innerWidth;
 		const height = window.innerHeight;
-		const shadowmapres = 1024;
 
 		// Camera Variables
 
