@@ -15,9 +15,9 @@ export default function Scene() {
 
 		// Camera Variables
 
-		const fov = 60;
+		const fov = 55;
 		const nearclip = 0.1;
-		const farclip = 1000;
+		const farclip = 512;
 
 		const camera = new THREE.PerspectiveCamera(
 			fov,
@@ -25,16 +25,9 @@ export default function Scene() {
 			nearclip,
 			farclip
 		);
-		camera.position.set(-15, 15, 13);
+		camera.position.set(6, 5, -3);
 		camera.rotation.order = "ZYX";
-		camera.rotation.set(65, 0, -45);
-		/*
-		camera.rotation.set(
-			THREE.MathUtils.degToRad(65),
-			THREE.MathUtils.degToRad(0),
-			THREE.MathUtils.degToRad(-42)
-			
-		); */
+		camera.rotation.set(3, 1, 3.14);
 
 		// Rendering Variables
 		const b_antialias = true;
@@ -58,32 +51,6 @@ export default function Scene() {
 
 		window.addEventListener("resize", onResize);
 
-		/*// Lighting
-
-		const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-		scene.add(ambientLight);
-
-		const dirLight = new THREE.DirectionalLight(0xffffff, 0.9);
-		dirLight.position.set(10, 5, 2);
-		dirLight.castShadow = true;
-		dirLight.shadow.mapSize.width = 1024;
-		dirLight.shadow.mapSize.height = 1024;
-		dirLight.shadow.camera.near = 0.5;
-		dirLight.shadow.camera.far = 25;
-		dirLight.shadow.camera.left = -10;
-		dirLight.shadow.camera.right = 10;
-		dirLight.shadow.camera.top = 10;
-		dirLight.shadow.camera.bottom = -10;
-		dirLight.shadow.radius = 5;
-		dirLight.shadow.blurSamples = 25;
-		dirLight.shadow.bias = 0.00001;
-
-		dirLight.shadow.camera.near = 0.1;
-		dirLight.shadow.camera.far = 5000;
-		scene.add(dirLight);
-
-		*/
-
 		// GLTF Loader
 		const loader = new GLTFLoader();
 
@@ -96,6 +63,7 @@ export default function Scene() {
 
 				gltf.scene.traverse((node) => {
 					if (node.isMesh) {
+						node.material.side = THREE.FrontSide;
 						node.material.lightMap = lightMap;
 						node.material.needsUpdate = true;
 					}
@@ -107,13 +75,22 @@ export default function Scene() {
 			(error) => console.error(error)
 		);
 
-		// Add all models to be loaded here.
-
 		const controls = new OrbitControls(camera, renderer.domElement);
 		controls.rotateSpeed = 0.7;
 		controls.zoomSpeed = 0.3;
 		controls.minDistance = 2;
 		controls.maxDistance = 10;
+		controls.minPolarAngle = 0; // radians
+		controls.maxPolarAngle = Math.PI / 2.5; // radians
+
+		function logCameraDetails(e) {
+			if (e.key === "q") {
+				console.log("Camera Pos: ", camera.position);
+				console.log("Camera Rot: ", camera.rotation);
+			}
+		}
+
+		window.addEventListener("keydown", logCameraDetails);
 
 		function animate() {
 			requestAnimationFrame(animate);
@@ -128,6 +105,7 @@ export default function Scene() {
 
 		return () => {
 			window.removeEventListener("resize", onResize);
+			window.removeEventListener("keydown", logCameraDetails);
 			container.current.removeChild(renderer.domElement);
 		};
 	}, []);
