@@ -60,9 +60,10 @@ export default function Scene() {
 				const textureLoader = new THREE.TextureLoader();
 				const lightMap = textureLoader.load("/lightmaps/room_lightmap.png");
 				lightMap.flipY = false;
-
+				let tables = [];
 				gltf.scene.traverse((node) => {
-					if (node.isMesh) {
+					if (node.isMesh && node.name.includes("table")) {
+						tables.push(node);
 						node.material.side = THREE.FrontSide;
 						node.material.lightMap = lightMap;
 						node.material.needsUpdate = true;
