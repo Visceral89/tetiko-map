@@ -53,6 +53,7 @@ export default function Scene() {
 
 		// GLTF Loader
 		const loader = new GLTFLoader();
+		const tables = [];
 
 		loader.load(
 			"/models/room.glb",
@@ -60,12 +61,17 @@ export default function Scene() {
 				const textureLoader = new THREE.TextureLoader();
 				const lightMap = textureLoader.load("/lightmaps/room_lightmap.png");
 				lightMap.flipY = false;
-				let tables = [];
+
 				gltf.scene.traverse((node) => {
 					if (node.isMesh && node.name.includes("table")) {
 						tables.push(node);
 						node.material.side = THREE.FrontSide;
-						node.material.lightMap = lightMap;
+						if (
+							node.material instanceof THREE.MeshStandardMaterial ||
+							node.material instanceof THREE.MeshLambertMaterial
+						) {
+							node.material.lightMap = lightMap;
+						}
 						node.material.needsUpdate = true;
 					}
 				});
@@ -75,6 +81,28 @@ export default function Scene() {
 			undefined,
 			(error) => console.error(error)
 		);
+
+		function onDocumentMouseClick(e) {
+			e.preventDefault();
+
+			let mouse = new THREE.Vector2(
+				(e.clientX / width) * 2 - 1,
+				-(e.clientY / height) * 2 + 1
+			);
+
+			let raycaster = new THREE.Raycaster();
+
+			raycaster.setFromCamera(mouse, camera);
+
+			let intersects = raycaster.intersectObjects(tables, true);
+
+			if (intersects.length > 0) {
+				intersects[0].object.material.color.set(0xff0000); // Change the color to red
+				intersects[0].object.material.needsUpdate = true;
+			}
+		}
+
+		window.addEventListener("click", onDocumentMouseClick, false);
 
 		const controls = new OrbitControls(camera, renderer.domElement);
 		controls.rotateSpeed = 0.7;
