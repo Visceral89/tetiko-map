@@ -136,6 +136,7 @@ export default function Scene() {
 			window.removeEventListener("resize", onResize);
 			window.removeEventListener("keydown", logCameraDetails);
 			container.current.removeChild(renderer.domElement);
+			document.removeEventListener("click", onDocumentMouseClick);
 		};
 	}, []);
 
