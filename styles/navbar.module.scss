@@ -1,10 +1,11 @@
 @import "variables";
 
 .navbar {
-	font-size: 16px;
+	font-size: 20px;
 	font-weight: 700;
 	height: 100vh;
-	background-color: rgba(255, 255, 255, 0);
+	background-color: $green-base;
+	color: $white-base;
 	display: flex;
 	flex-direction: column;
 	position: fixed;
@@ -16,7 +17,6 @@
 	justify-content: flex-start;
 	align-items: center;
 	gap: 16px;
-	box-shadow: 0px 5px 30px 1px rgba(30, 30, 30, 0.1);
 }
 
 .navbarItem {

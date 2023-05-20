@@ -62,9 +62,11 @@ export default function Scene() {
 				const lightMap = textureLoader.load("/lightmaps/room_lightmap.png");
 				lightMap.flipY = false;
 
+				let materials = {};
+
 				gltf.scene.traverse((node) => {
-					if (node.isMesh && node.name.includes("table")) {
-						tables.push(node);
+					if (node.isMesh) {
+						node.material = node.material.clone();
 						node.material.side = THREE.FrontSide;
 						if (
 							node.material instanceof THREE.MeshStandardMaterial ||
@@ -73,6 +75,12 @@ export default function Scene() {
 							node.material.lightMap = lightMap;
 						}
 						node.material.needsUpdate = true;
+
+						// Check if this is a table, and if so, add it to the list and save the material
+						if (node.name.includes("table")) {
+							tables.push(node);
+							materials[node.name] = node.material;
+						}
 					}
 				});
 
