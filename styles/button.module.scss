@@ -16,6 +16,11 @@
 	border-color: $pink-base;
 	color: $white-base;
 	background-color: $pink-base;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 0.5em;
 	@include border;
 }
 
