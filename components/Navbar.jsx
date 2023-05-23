@@ -6,14 +6,17 @@ import SignOutBtn from "./SignOutBtn";
 const Navbar = () => {
 	return (
 		<nav className={styles.navbar}>
-			<Image
-				scr="/logos/tetiko.png"
-				alt="tetiko logo"
-				width={372}
-				height={121}
-			/>
-			<div className={styles.navbarItem}>Tetiko Platskarta</div>
-			<div>
+			<div className={styles.navbarItem}>
+				<Image
+					src="/logos/logo-simple-white.svg"
+					alt="tetiko logo"
+					width={190}
+					height={60}
+					className={styles.navBarImg}
+				/>
+				<h1>Tetiko Platskarta</h1>
+			</div>
+			<div className={styles.navbarItem}>
 				<SignInBtn />
 			</div>
 		</nav>

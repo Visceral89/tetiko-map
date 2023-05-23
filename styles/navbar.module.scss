@@ -1,7 +1,7 @@
 @import "variables";
 
 .navbar {
-	font-size: 20px;
+	font-size: 18px;
 	font-weight: 700;
 	height: 100vh;
 	background-color: $green-base;
@@ -16,9 +16,16 @@
 	align-items: center;
 	justify-content: flex-start;
 	align-items: center;
-	gap: 16px;
+	gap: 20px;
+	text-align: center;
 }
 
 .navbarItem {
+	margin-top: 16px;
+	flex-grow: 1;
 	margin-top: 100px;
+}
+
+.navbarItem h1 {
+	text-transform: uppercase;
 }
