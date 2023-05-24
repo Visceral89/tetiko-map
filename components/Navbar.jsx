@@ -1,4 +1,5 @@
 import styles from "../styles/navbar.module.scss";
+import buttonstyle from "../styles/button.module.scss";
 import Image from "next/image";
 import SignInBtn from "./SignInBtn";
 import SignOutBtn from "./SignOutBtn";
@@ -17,7 +18,9 @@ const Navbar = ({ onModalOpen }) => {
 				<h1>Tetiko Platskarta</h1>
 			</div>
 			<div className={styles.navbarItem}>
-				<button onClick={onModalOpen}>Add Deltagare</button>
+				<button className={buttonstyle.btn} onClick={onModalOpen}>
+					Add Deltagare
+				</button>
 				<SignInBtn />
 			</div>
 		</nav>
