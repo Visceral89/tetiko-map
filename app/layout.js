@@ -1,13 +1,16 @@
 "use client";
 
 import "./globals.css";
-import { Inter } from "next/font/google";
 import { Roboto } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import AddPersonModal from "@/components/AddPersonModal";
 import { useState } from "react";
 
-const robot = Roboto({ subsets: ["latin"], weight: ["400", "700", "900"] });
+const robot = Roboto({
+	subsets: ["latin"],
+	weight: ["100", "300", "400", "500", "700", "900"],
+	style: ["italic", "normal"],
+});
 
 export const metadata = {
 	title: "Tetiko Map",
