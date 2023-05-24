@@ -7,8 +7,8 @@ const AddPersonModal = () => {
 	const [name, setName] = useState("");
 	const [surname, setSurName] = useState("");
 
-	async function handleSubmit(e) {
-		e.preventDefault();
+	async function handleSubmit(event) {
+		event.preventDefault();
 	}
 
 	return (

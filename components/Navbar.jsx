@@ -3,7 +3,7 @@ import Image from "next/image";
 import SignInBtn from "./SignInBtn";
 import SignOutBtn from "./SignOutBtn";
 
-const Navbar = () => {
+const Navbar = ({ onModalOpen }) => {
 	return (
 		<nav className={styles.navbar}>
 			<div className={styles.navbarItem}>
@@ -17,6 +17,7 @@ const Navbar = () => {
 				<h1>Tetiko Platskarta</h1>
 			</div>
 			<div className={styles.navbarItem}>
+				<button onClick={onModalOpen}>Add Deltagare</button>
 				<SignInBtn />
 			</div>
 		</nav>
