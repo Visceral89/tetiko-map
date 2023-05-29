@@ -1,5 +1,7 @@
 "use client";
 
+// I dont have metadata!
+
 import "./globals.css";
 import { Roboto } from "next/font/google";
 import Navbar from "@/components/Navbar";
@@ -11,11 +13,6 @@ const robot = Roboto({
 	weight: ["100", "300", "400", "500", "700", "900"],
 	style: ["italic", "normal"],
 });
-
-export const metadata = {
-	title: "Tetiko Map",
-	description: "A dynamic map of room placement",
-};
 
 export default function RootLayout({ children }) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
