@@ -1,5 +1,7 @@
 "use client";
 
+// I dont have metadata!
+
 import "./globals.css";
 import { Roboto } from "next/font/google";
 import Navbar from "@/components/Navbar";
