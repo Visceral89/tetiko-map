@@ -13,10 +13,14 @@
 	z-index: 1000;
 }
 
+.modal h1 {
+	text-transform: uppercase;
+}
+
 .modal {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: space-around;
 	align-items: center;
 	border-radius: 5px;
 	width: 500px;
@@ -37,5 +41,15 @@
 
 .modal input {
 	height: 32px;
-	font-size: 30px;
+	width: 100%;
+	border: none;
+	border-radius: 5px;
+	padding-left: 1em;
+	::placeholder {
+		font-size: 16px;
+	}
+}
+
+.modal input:active {
+	border: none;
 }

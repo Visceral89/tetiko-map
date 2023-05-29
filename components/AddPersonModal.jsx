@@ -15,23 +15,20 @@ const AddPersonModal = ({ onClose }) => {
 	return (
 		<div className={styles.container} onClick={onClose}>
 			<div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+				<h1>Add person</h1>
 				<form onSubmit={handleSubmit}>
-					<label>
-						Name:
-						<input
-							type="text"
-							value={name}
-							onChange={(e) => setName(e.target.value)}
-						/>
-					</label>
-					<label>
-						Surname:
-						<input
-							type="text"
-							value={surname}
-							onChange={(e) => setSurName(e.target.value)}
-						/>
-					</label>
+					<input
+						placeholder="Name:"
+						type="text"
+						value={name}
+						onChange={(e) => setName(e.target.value)}
+					/>
+					<input
+						placeholder="Lastname:"
+						type="text"
+						value={surname}
+						onChange={(e) => setSurName(e.target.value)}
+					/>
 					<button className={buttonstyle.btn} type="submit">
 						Submit
 					</button>
