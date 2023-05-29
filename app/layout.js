@@ -12,11 +12,6 @@ const robot = Roboto({
 	style: ["italic", "normal"],
 });
 
-export const metadata = {
-	title: "Tetiko Map",
-	description: "A dynamic map of room placement",
-};
-
 export default function RootLayout({ children }) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
